@@ -9,8 +9,7 @@ struct Vertex {
 	double x, y, z;
 };
 
-class BoundingBox
-{
+class BoundingBox {
 public:
 	// Build the bouding box from the specified corners
 	BoundingBox(
@@ -24,9 +23,9 @@ public:
 	~BoundingBox();
 
 	// Set bounding box min corner
-	inline void set_min( const Vertex new_min ) { _min = new_min; };
+	inline void set_min(const Vertex new_min) { _min = new_min; };
 	// Set bounding box max corner
-	inline void set_max( const Vertex new_max ) { _max = new_max; };
+	inline void set_max(const Vertex new_max) { _max = new_max; };
 
 	// Return bounding box min corner
 	inline Vertex get_min() { return _min; };
@@ -38,11 +37,11 @@ public:
 	inline Vertex get_size() { return _size; };
 
 	// Return whether the given point is contained in the bbox
-	bool contains_point( const Vertex& point );
+	bool contains_point(const Vertex& point);
 	// Return whether the given bounding box is contained in the bbox
-	bool contains_bbox( const BoundingBox& bbox );
+	bool contains_bbox(const BoundingBox& bbox);
 	// Return whether the given bounding box intersects the bbox
-	bool intersects_bbox( const BoundingBox& bbox );
+	bool intersects_bbox(const BoundingBox& bbox);
 
 private:
 	// The min corner
