@@ -2,6 +2,9 @@
 
 Parse an obj file and build its bounding box as well as getting its total area and volume.
 
+Only standard C++ library are used, so the code is cross plateform.
+The program is used by passing the path to the .obj file as first argument, e.g `main.exe path/to/file.obj` and outputs bounding box, area and volume data about the mesh.
+
 ## Bounding Box
 
 The bounding box has the following methods:
