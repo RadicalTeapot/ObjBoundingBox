@@ -1,18 +1,18 @@
 #include "BoundingBox.h"
 
-using namespace obj_tools;
+namespace objfiles {
 
-BoundingBox::BoundingBox( const Vertex min, const Vertex max ) : _min(min), _max(max)
+BoundingBox::BoundingBox( const Vertex min, const Vertex max ) : _min( min ), _max( max )
 {
 	set_center_size();
 }
 
-BoundingBox::BoundingBox( const std::vector<Vertex>& vertices) 
+BoundingBox::BoundingBox( const std::vector<Vertex>& vertices )
 {
 	// Initialize min to max double as it's the max possible value for point location
 	_min = Vertex { DBL_MAX, DBL_MAX, DBL_MAX };
 	// Initialize max to min double as it's the min possible value for point location
-	_max = Vertex {-DBL_MAX, -DBL_MAX, -DBL_MAX };
+	_max = Vertex { -DBL_MAX, -DBL_MAX, -DBL_MAX };
 
 	// Find the min and max corners
 	for ( const Vertex& vertex : vertices )
@@ -49,21 +49,13 @@ void BoundingBox::set_center_size()
 	};
 }
 
-void BoundingBox::set_min( const Vertex min ) { _min = min; }
-void BoundingBox::set_max( const Vertex max ) { _max = max; }
-
-Vertex BoundingBox::get_min() { return _min; }
-Vertex BoundingBox::get_max() { return _max; }
-Vertex BoundingBox::get_center() { return _center; }
-Vertex BoundingBox::get_size() { return _size; }
-
-bool BoundingBox::contains_point( const Vertex& point ) 
+bool BoundingBox::contains_point( const Vertex& point )
 {
 	return (
 		point.x < _max.x && point.x > _min.x &&
 		point.y < _max.y && point.y > _min.y &&
 		point.z < _max.z && point.z > _min.z
-	);
+		);
 }
 
 bool BoundingBox::contains_bbox( const BoundingBox& bbox )
@@ -71,7 +63,7 @@ bool BoundingBox::contains_bbox( const BoundingBox& bbox )
 	// Bbox is contained if both it's corners are contained
 	return (
 		contains_point( bbox._min ) && contains_point( bbox._max )
-	);
+		);
 }
 
 bool BoundingBox::intersects_bbox( const BoundingBox& bbox )
@@ -81,23 +73,25 @@ bool BoundingBox::intersects_bbox( const BoundingBox& bbox )
 		( _min.x < bbox._min.x && _max.x > bbox._min.x ) ||
 		( _min.x < bbox._max.x && _max.x > bbox._max.x ) ||
 		( bbox._min.x < _min.x && bbox._max.x > _min.x ) ||
-		( bbox._min.x < _max.x && bbox._max.x > _max.x ) 
-	);
+		( bbox._min.x < _max.x && bbox._max.x > _max.x )
+		);
 	// Check for intersections on the y axis
 	bool intersect_y = (
 		( _min.y < bbox._min.y && _max.y > bbox._min.y ) ||
 		( _min.y < bbox._max.y && _max.y > bbox._max.y ) ||
 		( bbox._min.y < _min.y && bbox._max.y > _min.y ) ||
 		( bbox._min.y < _max.y && bbox._max.y > _max.y )
-	);
+		);
 	// Check for intersections on the z axis
 	bool intersect_z = (
 		( _min.z < bbox._min.z && _max.z > bbox._min.z ) ||
 		( _min.z < bbox._max.z && _max.z > bbox._max.z ) ||
 		( bbox._min.z < _min.z && bbox._max.z > _min.z ) ||
 		( bbox._min.z < _max.z && bbox._max.z > _max.z )
-	);
+		);
 
 	// Intersects if intersections on all axes
 	return ( intersect_x && intersect_y && intersect_z );
 }
+
+}  // namespace objfiles
